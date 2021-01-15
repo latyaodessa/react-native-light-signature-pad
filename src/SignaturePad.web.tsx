@@ -1,36 +1,47 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {WebView} from 'react-native-webview';
+import useScript from './hooks/useScript';
 
 
 const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChange?: (base64DataUrl: any) => void }> = ({
-                                                                                                                            color = "#000000",
-                                                                                                                            backgroundColor = "#FFF",
-                                                                                                                            onChange
-                                                                                                                          }) => {
-
+                                                                                                                         color = "#000000",
+                                                                                                                         backgroundColor = "#FFF",
+                                                                                                                         onChange
+                                                                                                                       }) => {
   const injectedJavaScript = nativeFunction
     + errorHandler
     + js
     + application(color, backgroundColor, undefined);
+
+  useScript(injectedJavaScript);
+
+  React.useEffect(() => {
+    const handler = (event: any) => {
+
+      try {
+        const data = JSON.parse(event.data)
+        if (data.base64DataUrl && onChange) {
+          onChange(data);
+        }
+
+      } catch (err) {
+        console.log(err);
+      }
+
+    }
+
+    window.addEventListener("message", handler)
+
+    return () => window.removeEventListener("message", handler)
+  }, [])
+
 
   const html = htmlContent('');
 
 
   return (
     <View style={styles.container}>
-      <WebView
-        automaticallyAdjustContentInsets={false}
-        onMessage={(event: any) => {
-          onChange && onChange(JSON.parse(event.nativeEvent.data));
-        }}
-        source={{html: html}}
-        originWhitelist={['*']}
-        javaScriptEnabled={true}
-        javaScriptEnabledAndroid={true}
-        injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-        injectedJavaScript={injectedJavaScript}
-      />
+      <div dangerouslySetInnerHTML={{__html: html}}/>
     </View>
   );
 }
@@ -490,9 +501,7 @@ const application = (penColor: any, backgroundColor: any, dataURL: any) => `
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: 500,
-    width: 500
+    flex: 1
   }
 });
 

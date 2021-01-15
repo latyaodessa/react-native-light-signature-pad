@@ -1,5 +1,7 @@
 # react-native-light-signature-pad
 
+## Supported
+
   - Android
   - iOS
   - Web (react-native-web)
@@ -9,41 +11,8 @@
 
 ```sh
 yarn add react-native-light-signature-pad
-yarn add react-native-web-webview
-```
-For Web:
-```sh
+// Webview
 yarn add react-native-webview
-```
-Create webpack.config.js in root folder
-
-```js
-const createExpoWebpackConfigAsync = require('@expo/webpack-config');
-
-module.exports = async function(env, argv) {
-  const config = await createExpoWebpackConfigAsync(env, argv);
-  config.resolve.alias['react-native'] = 'react-native-web';
-  config.resolve.alias['react-native-webview'] = 'react-native-web-webview';
-
-  const webViewRule = {
-    test: /postMock.html$/,
-    use: {
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]',
-      },
-    },
-  };
-
-  config.module.rules = [
-    ...config.module.rules,
-    webViewRule,
-  ];
-
-  return config;
-};
-
-```
 
 
 ## Basic Usage
