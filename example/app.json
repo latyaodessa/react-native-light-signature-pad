@@ -1,0 +1,22 @@
+{
+  "name": "react-native-light-signature-pad-example",
+  "displayName": "LightSignaturePad Example",
+  "expo": {
+    "name": "react-native-light-signature-pad-example",
+    "slug": "react-native-light-signature-pad-example",
+    "description": "Example app for react-native-light-signature-pad",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
