@@ -1,7 +1,7 @@
 {
   "name": "react-native-light-signature-pad-example",
   "description": "Example app for react-native-light-signature-pad",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "main": "index",
   "scripts": {
