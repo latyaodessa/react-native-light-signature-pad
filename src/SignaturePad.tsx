@@ -20,12 +20,7 @@ const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChang
   return (
     <View style={styles.container}>
       <WebView
-        // ref={ref => {
-        //     // this.webview = ref;
-        // }}
         automaticallyAdjustContentInsets={false}
-        // onNavigationStateChange={this._onNavigationChange}
-
         onMessage={(event: any) => {
           onChange && onChange(JSON.parse(event.nativeEvent.data));
         }}
