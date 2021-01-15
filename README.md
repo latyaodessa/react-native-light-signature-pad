@@ -18,11 +18,11 @@ yarn add react-native-webview
 ## Basic Usage
 
 ```js
-import LightSignaturePad from "react-native-light-signature-pad";
+import {SignaturePad} from "react-native-light-signature-pad";
 
 // ...
 
-  <LightSignaturePad/>
+  <SignaturePad backgroundColor={"#000000"} color={"#FFF"} onChange={base64DataUrl => console.log(base64DataUrl)}/>
 
 ```
 
