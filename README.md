@@ -1,22 +1,70 @@
 # react-native-light-signature-pad
 
-test
+  - Android
+  - iOS
+  - Web (react-native-web)
+  - Expo friendly
 
 ## Installation
 
 ```sh
-npm install react-native-light-signature-pad
+yarn add react-native-light-signature-pad
+yarn add react-native-web-webview
+```
+For Web:
+```sh
+yarn add react-native-webview
+```
+Create webpack.config.js in root folder
+
+```js
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
+
+module.exports = async function(env, argv) {
+  const config = await createExpoWebpackConfigAsync(env, argv);
+  config.resolve.alias['react-native'] = 'react-native-web';
+  config.resolve.alias['react-native-webview'] = 'react-native-web-webview';
+
+  const webViewRule = {
+    test: /postMock.html$/,
+    use: {
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+      },
+    },
+  };
+
+  config.module.rules = [
+    ...config.module.rules,
+    webViewRule,
+  ];
+
+  return config;
+};
+
 ```
 
-## Usage
+
+## Basic Usage
 
 ```js
 import LightSignaturePad from "react-native-light-signature-pad";
 
 // ...
 
-const result = await LightSignaturePad.multiply(3, 7);
+  <LightSignaturePad/>
+
 ```
+
+
+| Prop | Default |  Description |
+| --- | --- |  --- |
+| color | #000000 | Pen color |
+| backgroundColor | #FFF | Canvas background color |
+|onChange| | onChange(base64DataUrl) => void |
+
+
 
 ## Contributing
 

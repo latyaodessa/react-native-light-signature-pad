@@ -14,12 +14,28 @@ module.exports = async function (env, argv) {
     use: 'babel-loader',
   });
 
+  const webViewRule = {
+    test: /postMock.html$/,
+    use: {
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+      },
+    },
+  };
+
   // We need to make sure that only one version is loaded for peerDependencies
   // So we alias them to the versions in example's node_modules
   Object.assign(config.resolve.alias, {
     ...resolver.extraNodeModules,
     'react-native-web': path.join(node_modules, 'react-native-web'),
+    'react-native-webview': path.join(node_modules, 'react-native-web-webview'),
   });
+
+  config.module.rules = [
+    ...config.module.rules,
+    webViewRule,
+  ];
 
   return config;
 };

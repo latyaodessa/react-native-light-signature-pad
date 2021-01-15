@@ -3,12 +3,16 @@ import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 
-const SignaturePad = () => {
+const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChange?: (base64DataUrl: any) => void }> = ({
+                                                                                                                            color = "#000000",
+                                                                                                                            backgroundColor = "#FFF",
+                                                                                                                            onChange
+                                                                                                                          }) => {
 
   const injectedJavaScript = nativeFunction
     + errorHandler
     + js
-    + application("red", "white", undefined);
+    + application(color, backgroundColor, undefined);
 
   const html = htmlContent('');
 
@@ -23,8 +27,7 @@ const SignaturePad = () => {
         // onNavigationStateChange={this._onNavigationChange}
 
         onMessage={(event: any) => {
-          const base64DataUrl = JSON.parse(event.nativeEvent.data);
-          console.log(base64DataUrl);
+          onChange && onChange(JSON.parse(event.nativeEvent.data));
         }}
         source={{html: html}}
         originWhitelist={['*']}
@@ -492,8 +495,7 @@ const application = (penColor: any, backgroundColor: any, dataURL: any) => `
 
 const styles = StyleSheet.create({
   container: {
-    height: 500,
-    width: 500
+    flex: 1
   }
 });
 
