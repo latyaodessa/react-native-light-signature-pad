@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import useScript from './hooks/useScript';
+import { newApp } from './scripts/AppScript';
 
 
 const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChange?: (base64DataUrl: any) => void }> = ({
@@ -8,10 +9,13 @@ const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChang
                                                                                                                          backgroundColor = "#FFF",
                                                                                                                          onChange
                                                                                                                        }) => {
+  // const injectedJavaScript = nativeFunction
+  //   + errorHandler
+  //   + js
+  //   + application(color, backgroundColor, undefined);
+
   const injectedJavaScript = nativeFunction
-    + errorHandler
-    + js
-    + application(color, backgroundColor, undefined);
+    + newApp;
 
   useScript(injectedJavaScript);
 
@@ -39,11 +43,7 @@ const SignaturePad: React.FC<{ color?: string, backgroundColor?: string, onChang
   const html = htmlContent('');
 
 
-  return (
-    <View style={styles.container}>
-      <div dangerouslySetInnerHTML={{__html: html}}/>
-    </View>
-  );
+  return (<div dangerouslySetInnerHTML={{__html: html}}/>);
 }
 
 
@@ -68,7 +68,7 @@ const htmlContent = (script: any) =>
 
     </style>
     <body>
-      <canvas style="margin-left: 0; margin-top: 0;"></canvas>
+      <canvas id="myCanvas" width="300" height="300" style="background: #000; margin: 0">Your browser does not support the HTML5 canvas tag.</canvas>
       <script>
         ${script}
       </script>

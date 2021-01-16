@@ -11,9 +11,11 @@
 
 ```sh
 yarn add react-native-light-signature-pad
+
 // Webview
 yarn add react-native-webview
 
+```
 
 ## Basic Usage
 
